@@ -1,0 +1,25 @@
+{
+    "name": "@web-dev-tools/${packageName}",
+    "version": "1.0.1",
+    "description": "Package ${packageName} - Tool for web development",
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
+    "author": "Anton Frolov",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:frolant/web-dev-tools.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "browserslist": [
+        "last 2 versions"
+    ],
+    "scripts": {
+        "build": "node ../../run build ${packageName}",
+        "watch:to:lib": "node ../../run watch-to-lib ${packageName}",
+        "watch:to:app": "node ../../run watch-to-app ${packageName}",
+        "watch:to:app:types": "node ../../run watch-to-app-types ${packageName}"
+    }
+}
