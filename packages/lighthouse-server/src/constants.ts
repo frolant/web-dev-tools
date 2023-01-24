@@ -1,5 +1,17 @@
+interface IAppState {
+    isGenerationInProgress: boolean;
+    currentCheckedUrl: string;
+    savedReport: string;
+}
+
+export const appState: IAppState = {
+    isGenerationInProgress: false,
+    currentCheckedUrl: null,
+    savedReport: ''
+};
+
 export const initialCheckedUrl = 'http://127.0.0.1:4000';
-export const reportFileName = 'report.html';
+export const defaultServerPort = 5000;
 
 export const puppeteerOptions = {
     headless: true,

@@ -15,7 +15,7 @@ npm install --save-dev @web-dev-tools/lighthouse-server
 Run:
 
 ```shell
-node @web-dev-tools/lighthouse-server
+node ./node_modules/@web-dev-tools/lighthouse-server
 ```
 
 Or add on your project package.json
@@ -23,7 +23,7 @@ Or add on your project package.json
 ```json
 {
     "scripts": {
-        "lighthouse": "node @web-dev-tools/lighthouse-server"
+        "lighthouse": "node ./node_modules/@web-dev-tools/lighthouse-server"
     }
 }
 ```
@@ -37,5 +37,5 @@ Options for command-line:
 Run with options example:
 
 ```shell
-node @web-dev-tools/lighthouse-server 5001 http://127.0.0.1:3000 ./reports
+node ./node_modules/@web-dev-tools/lighthouse-server 5001 http://127.0.0.1:3000 ./reports
 ```

@@ -3,17 +3,16 @@ import lighthouse from 'lighthouse';
 // @ts-ignore
 import lighthouseReportGenerator from 'lighthouse/report/generator/report-generator';
 import puppeteer from 'puppeteer';
-import { resolve } from 'path';
-import fs from 'fs';
 
 import { logMessage } from './logMessage';
 
-import { lighthouseOptions, puppeteerOptions, reportFileName } from '../constants';
+import { appState, lighthouseOptions, puppeteerOptions } from '../constants';
 
-export const generateLighthouseReport = async (checkedUrl: string, reportPath: string): Promise<void> => {
-    logMessage(`Report generation for ${checkedUrl} initialized`);
+export const generateLighthouseReport = async (checkedUrl: string): Promise<void> => {
+    appState.isGenerationInProgress = true;
+    appState.savedReport = '';
 
-    const reportFilePath = resolve(reportPath, reportFileName);
+    logMessage(`Report for ${checkedUrl} requested`);
 
     const browser = await puppeteer.launch(puppeteerOptions);
 
@@ -25,13 +24,8 @@ export const generateLighthouseReport = async (checkedUrl: string, reportPath: s
         port
     });
 
-    const html = lighthouseReportGenerator.generateReport(lighthouseReport, 'html');
+    appState.savedReport = lighthouseReportGenerator.generateReport(lighthouseReport, 'html');
+    appState.isGenerationInProgress = false;
 
     logMessage(`Report for ${checkedUrl} generated`);
-
-    fs.writeFile(reportFilePath, html, (error: any) => {
-        if (error) throw error;
-    });
-
-    logMessage(`Report saved in ${reportFilePath}`);
 };

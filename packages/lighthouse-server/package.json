@@ -18,7 +18,8 @@
     ],
     "scripts": {
         "build": "node ../../run build lighthouse-server isNodeTarget",
-        "test": "node ./lib",
+        "run:prod": "node ./lib",
+        "run:dev": "nodemon -q -e js ./lib",
         "watch:to:lib": "node ../../run watch-to-lib lighthouse-server isNodeTarget",
         "watch:to:app": "node ../../run watch-to-app lighthouse-server isNodeTarget",
         "watch:to:app:types": "node ../../run watch-to-app-types lighthouse-server isNodeTarget"
@@ -29,6 +30,7 @@
         "puppeteer": "^19.5.2"
     },
     "devDependencies": {
-        "@types/express": "^4.17.15"
+        "@types/express": "^4.17.15",
+        "nodemon": "^2.0.20"
     }
 }

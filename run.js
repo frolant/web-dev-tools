@@ -1,8 +1,9 @@
 'use strict';
 
 const { spawn } = require('child_process');
+const { resolve } = require('path');
 
-const { webpack } = require('./local.config.json');
+const webpack = resolve(__dirname, './node_modules/.bin/webpack');
 
 const commands = {
     ['build']: (packageName) => `cd ../../ && ${webpack} --mode production --env packageName=${packageName}`,
