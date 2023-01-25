@@ -24,6 +24,8 @@ export const generateLighthouseReport = async (checkedUrl: string): Promise<void
         port
     });
 
+    browser.close();
+
     appState.savedReport = lighthouseReportGenerator.generateReport(lighthouseReport, 'html');
     appState.isGenerationInProgress = false;
 

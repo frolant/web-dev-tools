@@ -32,10 +32,9 @@ Options for command-line:
 
  - Server port (default: 5000)
  - Default checked url (default: http://127.0.0.1:4000)
- - Report generation result path (default: "./")
 
 Run with options example:
 
 ```shell
-node ./node_modules/@web-dev-tools/lighthouse-server 5001 http://127.0.0.1:3000 ./reports
+node ./node_modules/@web-dev-tools/lighthouse-server 5001 http://127.0.0.1:3000
 ```

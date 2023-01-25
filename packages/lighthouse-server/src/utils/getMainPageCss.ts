@@ -9,34 +9,37 @@ body {
 
 #container {
     position: absolute;
-    margin-left: -0.625em;
     z-index: 9999;
     top: 0;
     width: 100%;
+    pointer-events: none;
 }
 
-form {
+#container > form {
     display: flex;
     width: 360px;
     margin: 0 auto 0;
-    padding: 10px 20px;
+    padding: 8px 20px;
     background-color: #000000;
     border-width: 0 1px 1px 1px;
     border-style: solid;
     border-color: #424242;
     border-radius: 0 0 10px 10px;
+    pointer-events: all;
 }
 
-input[type=text] {
-    width: 300px;
+#container > form > input[type=text] {
+    width: calc(100% - 60px);
 }
 
-input[type=submit] {
+#container > form > input[type=submit] {
     width: 60px;
 }
 
-span {
+#container > span {
     display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 20px auto 0;
     padding: 10px 20px;
     width: 360px;
@@ -55,5 +58,16 @@ iframe {
     border: 0;
     height: 100%;
     width: 100%;
+}
+
+@media screen and (max-width: 480px) {
+    #container {
+       width: calc(100% - 60px);
+    }
+
+    #container > form,
+    #container > span {
+        width: 100%;
+    }
 }
 `;
