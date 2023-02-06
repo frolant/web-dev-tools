@@ -9,13 +9,19 @@ module.exports = {
         "project": "./tsconfig.eslint.json",
         "sourceType": "module"
     },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
     "plugins": [
         "@typescript-eslint",
         "eslint-plugin-jsdoc",
         "eslint-plugin-prefer-arrow",
         "eslint-plugin-react",
         "eslint-plugin-jsx-a11y",
-        "react-hooks"
+        "react-hooks",
+        "import"
     ],
     "rules": {
         "@typescript-eslint/adjacent-overload-signatures": "error",
