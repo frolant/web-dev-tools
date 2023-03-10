@@ -1,0 +1,25 @@
+{
+    "name": "@web-dev-tools/webpack-progress-plugin-handler",
+    "version": "1.0.0",
+    "description": "Handler for WebpackProgressPlugin",
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
+    "author": "Anton Frolov",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:frolant/web-dev-tools.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "browserslist": [
+        "last 2 versions"
+    ],
+    "scripts": {
+        "build": "node ../../run build webpack-progress-plugin-handler",
+        "watch:to:lib": "node ../../run watch-to-lib webpack-progress-plugin-handler",
+        "watch:to:app": "node ../../run watch-to-app webpack-progress-plugin-handler",
+        "watch:to:app:types": "node ../../run watch-to-app-types webpack-progress-plugin-handler"
+    }
+}
