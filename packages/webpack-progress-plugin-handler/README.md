@@ -16,23 +16,31 @@ npm install --save-dev @web-dev-tools/webpack-progress-plugin-handler
 ### Use
 
 ```javascript
-const progressPluginHandler = require('@web-dev-tools/webpack-progress-plugin-handler');
+const { progressPluginHandler } = require('@web-dev-tools/webpack-progress-plugin-handler');
 
 module.exports = (env, argv) => {
-    // Webpack configuration
+    const configName = 'client';
 
-    plugins: [
-        // Add ProgressPlugin with progressPluginHandler in plugins
+    return {
+        // ...Webpack configuration data
 
-        new webpack.ProgressPlugin((percentage) => {
-            progressPluginHandler(configName, percentage)
-        })
-    ]
+        plugins: [
+            // Add ProgressPlugin with progressPluginHandler in plugins
+
+            new webpack.ProgressPlugin((percentage, message, ...args) => {
+                progressPluginHandler(configName, percentage, message, args)
+            })
+        ]
+    }
 }
 ```
 
 ### Options
 
-> `configName` - Configuration item name 
+> `configName` - Configuration item name (Label for progress-bar item)
 >
-> `percentage` - Current percentage passed from the webpack.ProgressPlugin
+> `percentage` - Percentage passed from the webpack.ProgressPlugin
+>
+> `message` - Message passed from the webpack.ProgressPlugin
+> 
+> `args` - Other build info passed from the webpack.ProgressPlugin

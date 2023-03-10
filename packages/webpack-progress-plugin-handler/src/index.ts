@@ -1,1 +1,1 @@
-export { default } from './progressPluginHandler';
+export { progressPluginHandler } from './progressPluginHandler';

@@ -1,30 +1,38 @@
-import { state, progressData, displayProgressPercentRestriction } from './constants';
+import { state, progressData, processMessageData, displayingRestriction } from './constants';
 
-import { getMessage, clearLogLines } from './utils';
+import { getMessage, logMessage, clearLogLines } from './utils';
 
-const progressPluginHandler = (configName: string, progress: number): void => {
-    const isNotActive = !Object.values(progressData).find((item) => item !== 100);
-    const percentage = progress * 100;
+export const progressPluginHandler = (configName = 'progress', progress = 0, processMessage = '', processInfo: string[] = []): void => {
+    const percentage = Math.floor(progress * 100);
+    const logLinesCount = Object.keys(progressData).length + 1;
 
+    processMessageData[configName] = processMessage || processInfo.length ? `${processMessage} ${processInfo.join(' ')}` : '';
     progressData[configName] = percentage;
 
-    if (percentage > displayProgressPercentRestriction) {
+    if (percentage > displayingRestriction) {
         if (state.initialized) {
-            clearLogLines(3);
+            clearLogLines(logLinesCount);
+        } else {
+            state.initialized = true;
         }
 
         Object.keys(progressData).forEach((entryName) => {
-            process.stdout.write(getMessage(entryName, progressData[entryName]));
-            process.stdout.write('\n');
+            const message = getMessage(entryName, progressData[entryName], processMessageData[entryName]);
+            logMessage(message);
         });
-
-        if (!state.initialized) {
-            state.initialized = true;
-        }
     }
 
-    if (isNotActive) {
-        state.initialized = false;
+    if (state.initialized && percentage === 100) {
+        const isPercentageFinished = !Object.values(progressData).find((item) => item !== 100);
+
+        if (isPercentageFinished) {
+            const isMessagesFinished = !Object.values(processMessageData).find(Boolean);
+
+            if (isMessagesFinished) {
+                state.initialized = false;
+                clearLogLines(logLinesCount);
+            }
+        }
     }
 };
 

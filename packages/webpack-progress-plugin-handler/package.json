@@ -17,9 +17,10 @@
         "last 2 versions"
     ],
     "scripts": {
-        "build": "node ../../run build webpack-progress-plugin-handler",
-        "watch:to:lib": "node ../../run watch-to-lib webpack-progress-plugin-handler",
-        "watch:to:app": "node ../../run watch-to-app webpack-progress-plugin-handler",
-        "watch:to:app:types": "node ../../run watch-to-app-types webpack-progress-plugin-handler"
+        "build": "node ../../run build webpack-progress-plugin-handler isNodeTarget",
+        "watch:to:lib": "node ../../run watch-to-lib webpack-progress-plugin-handler isNodeTarget",
+        "watch:to:app": "node ../../run watch-to-app webpack-progress-plugin-handler isNodeTarget",
+        "watch:to:app:types": "node ../../run watch-to-app-types webpack-progress-plugin-handler isNodeTarget",
+        "test": "node ./test"
     }
 }
