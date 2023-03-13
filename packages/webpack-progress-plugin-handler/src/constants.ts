@@ -1,14 +1,4 @@
-interface IProgressData {
-    [itemName: string]: number;
-}
-
-interface IProcessData {
-    [itemName: string]: string;
-}
-
-interface IState {
-    initialized: boolean;
-}
+import { IProcessData, IProgressData, IState } from './types';
 
 export const progressData: IProgressData = {};
 
@@ -18,7 +8,8 @@ export const state: IState = {
     initialized: false
 };
 
-export const displayingRestriction = 10;
+export const displayingPercentageRestriction = 10;
+export const maxPercentage = 100;
 
 export const consoleStyles = {
     dim: '\x1b[2m',
