@@ -19,8 +19,8 @@ const askQuestion = async (question) => new Promise((resolve) => {
 const getProcessedQuestion = (data) => {
     return `${data.question}\n${data.answers.reduce((result, item, key) => {
         const number = key + 1;
-        return `${result}${number} ${item.value}${number === 1 ? ' (default)' : ''}\n`;
-    }, '')}`;
+        return `${result}${logger.getGrayText(number)} ${item.value}${number === 1 ? logger.getGrayText(' (default)') : ''}\n`;
+    }, '')}> `;
 };
 
 const getAnswerFromDialog = async (data) => {
