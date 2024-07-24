@@ -5,20 +5,22 @@ import { getProgressBar } from './utils/progress';
 import { state, progressData, processMessageData, displayingPercentageRestriction, maxPercentage } from './constants';
 
 export const progressPluginHandler = (
+    clearConsole: boolean,
     label = 'processing',
     progress = 0,
     processMessage = '',
     processInfo: string[] = []
 ): void => {
     const percentage = Math.floor(progress * maxPercentage);
-    const logLinesCount = Object.keys(progressData).length + 1;
+    const logLinesCount = clearConsole ? undefined : Object.keys(progressData).length + 1;
+    const clearLogHandler = clearConsole ? console.clear : clearLogLines;
 
     processMessageData[label] = getProcessMessage(processMessage, processInfo);
     progressData[label] = percentage;
 
     if (percentage > displayingPercentageRestriction) {
         if (state.initialized) {
-            clearLogLines(logLinesCount);
+            clearLogHandler(logLinesCount);
         } else {
             state.initialized = true;
         }
@@ -38,7 +40,7 @@ export const progressPluginHandler = (
         if (isProgressFinished(progressData)) {
             if (isMessagesEmpty(processMessageData)) {
                 state.initialized = false;
-                clearLogLines(logLinesCount);
+                clearLogHandler(logLinesCount);
             }
         }
     }

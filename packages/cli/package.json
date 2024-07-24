@@ -1,0 +1,32 @@
+{
+    "name": "@web-dev-tools/cli",
+    "version": "1.0.0",
+    "description": "Configured command line interface",
+    "author": "Anton Frolov",
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:frolant/web-dev-tools.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "cli/index.js",
+    "bin": {
+        "cli": "bin/cli.js"
+    },
+    "files": [
+        "bin/",
+        "cli/"
+    ],
+    "engines": {
+        "node": ">=18.15.0"
+    },
+    "scripts": {
+        "build": "echo Watch mode not supported && exit 0",
+        "watch:to:lib": "echo Watch mode not supported && exit 0",
+        "watch:to:app": "echo Watch mode not supported && exit 0",
+        "watch:to:app:types": "echo Watch mode not supported && exit 0",
+        "test": "node ./test"
+    }
+}
