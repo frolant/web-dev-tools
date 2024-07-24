@@ -2,7 +2,9 @@
 
 const log = console.log;
 
+const getErrorText = (text) => `\u001b[31m\u001b[1m${text}\x1b[0m`;
+
 module.exports = ({
-    wrongArgumentError: () => log('Wrong command arguments!'),
-    wrongChooseError: () => log('Wrong choose. Run cancelled!'),
+    wrongArgumentError: () => log(getErrorText('Wrong command arguments!')),
+    wrongChooseError: () => log(getErrorText('Wrong choose. Run cancelled!')),
 });
