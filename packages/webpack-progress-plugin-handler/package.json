@@ -1,6 +1,6 @@
 {
     "name": "@web-dev-tools/webpack-progress-plugin-handler",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Handler for WebpackProgressPlugin",
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
