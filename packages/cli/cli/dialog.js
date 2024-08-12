@@ -17,9 +17,9 @@ const askQuestion = async (question) => new Promise((resolve) => {
 });
 
 const getProcessedQuestion = (data) => {
-    return `\n${data.question}\n${data.answers.reduce((result, item, key) => {
-        const number = key + 1;
-        return `${result}${logger.getGrayText(number)} ${item.value}${number === 1 ? logger.getGrayText(' (default)') : ''}\n`;
+    return `\n${data.question}\n${data.answers.reduce((result, item) => {
+        const number = item.id;
+        return `${result}${logger.getGrayText(number)} ${item.value}${number === '1' ? logger.getGrayText(' (default)') : ''}\n`;
     }, '')}> `;
 };
 

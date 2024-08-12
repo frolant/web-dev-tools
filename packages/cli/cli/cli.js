@@ -6,7 +6,19 @@ const { spawn } = require('child_process');
 const logger = require('./logger');
 const getCommandFromDialog = require('./dialog');
 
-const config = require(resolve(process.cwd(), './.clirc.js'));
+const configData = require(resolve(process.cwd(), './.clirc.js'));
+
+const getProcessedConfigItem = (data) => {
+    return data.answers ? {
+        ...data,
+        answers: data.answers.map((item, id) => getProcessedConfigItem({
+            ...item,
+            id: (id + 1).toString()
+        }))
+    } : data;
+};
+
+const config = getProcessedConfigItem(configData);
 
 const runCommand = (command) => spawn(command, {
     stdio: 'inherit',
@@ -23,7 +35,7 @@ const getDialogData = (config, args) => {
     if (args.length) {
         args.forEach((arg) => {
             if (result && result.answers) {
-                const findingQuestion = result.answers.find((answer) => answer.value === arg);
+                const findingQuestion = result.answers.find((answer) => answer.id === arg || answer.value === arg);
                 result = findingQuestion ? findingQuestion : null;
             }
         });
