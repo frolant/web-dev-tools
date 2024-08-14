@@ -10,13 +10,14 @@ const clearDialogScreen = () => {
 };
 
 const askQuestion = async (question) => new Promise((resolve) => {
+    clearDialogScreen();
+
     const questionInterface = readLine.createInterface({
         input: process.stdin,
         output: process.stdout
     });
 
     questionInterface.question(question, (answer) => {
-        clearDialogScreen();
         questionInterface.close();
         resolve(answer.toLowerCase());
     });
