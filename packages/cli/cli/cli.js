@@ -51,7 +51,7 @@ const cli = async (args) => {
         const command = await getCommandFromDialog(dialogData);
         command && runCommand(command);
     } else {
-        logger.wrongArgumentError();
+        logger.logWrongArgumentError();
     }
 };
 

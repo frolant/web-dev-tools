@@ -2,11 +2,13 @@
 
 const log = console.log;
 
-const getRedText = (text) => `\u001b[31m\u001b[1m${text}\x1b[0m`;
+const getStyledText = (style, text) => `${style}${text}\x1b[0m`;
+const getErrorText = (text) => getStyledText('\u001b[31m\u001b[1m', text);
 
 module.exports = ({
-    wrongArgumentError: () => log(getRedText('Wrong command arguments!')),
-    wrongChooseError: () => log(getRedText('Wrong choose. Run cancelled!')),
-    getGrayText: (text) => `\x1b[90m${text}\x1b[0m`,
-    getBoldText: (text) => `\u001b[31m${text}\x1b[0m`,
+    logWrongArgumentError: () => log(getErrorText('Wrong command arguments!')),
+    logWrongChooseError: () => log(getErrorText('Wrong choose. Run cancelled!')),
+    getBoldText: (text) => getStyledText('\x1b[1m', text),
+    getGrayText: (text) => getStyledText('\x1b[2m', text),
+    getInclinedGrayText: (text) => getStyledText('\x1b[3m\x1b[2m', text),
 });
