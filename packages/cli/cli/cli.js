@@ -1,24 +1,10 @@
 "use strict";
 
-const { resolve } = require('path');
 const { spawn } = require('child_process');
 
-const logger = require('./logger');
 const getCommandFromDialog = require('./dialog');
-
-const configData = require(resolve(process.cwd(), './.clirc.js'));
-
-const getProcessedConfigItem = (data) => {
-    return data.answers ? {
-        ...data,
-        answers: data.answers.map((item, id) => getProcessedConfigItem({
-            ...item,
-            id: (id + 1).toString()
-        }))
-    } : data;
-};
-
-const config = getProcessedConfigItem(configData);
+const logger = require('./logger');
+const config = require('./config');
 
 const runCommand = (command) => spawn(command, {
     stdio: 'inherit',
@@ -32,7 +18,7 @@ const runCommand = (command) => spawn(command, {
 const getDialogData = (config, args) => {
     let result = config;
 
-    if (args.length) {
+    if (config && args.length) {
         args.forEach((arg) => {
             if (result && result.answers) {
                 const findingQuestion = result.answers.find((answer) => answer.id === arg || answer.value === arg);
