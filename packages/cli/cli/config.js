@@ -5,8 +5,8 @@ const logger = require('./logger');
 
 const getSearchPathsData = () => {
     const configFileRelativePath = `${sep}.clirc.js`;
-    return process.cwd().split(sep).filter(Boolean).map((path, id, data) => {
-        return `${sep}${data.slice(0, id + 1).join(sep)}${configFileRelativePath}`;
+    return process.cwd().split(sep).map((path, id, data) => {
+        return `${data.slice(0, id + 1).join(sep)}${configFileRelativePath}`;
     }).reverse();
 };
 
