@@ -5,6 +5,7 @@ const { spawn } = require('child_process');
 const getCommandFromDialog = require('./dialog');
 const logger = require('./logger');
 const config = require('./config');
+const { getHistoryData } = require('./utils');
 
 const runCommand = (command) => spawn(command, {
     stdio: 'inherit',
@@ -15,14 +16,19 @@ const runCommand = (command) => spawn(command, {
     }
 });
 
-const getDialogData = (config, args) => {
+const getDialogDataFromArgs = (config, args) => {
     let result = config;
 
     if (config && args.length) {
+        let argsHistory = [];
+
         args.forEach((arg) => {
+            argsHistory.push(arg);
+
             if (result && result.answers) {
-                const findingQuestion = result.answers.find((answer) => answer.id === arg || answer.value === arg);
-                result = findingQuestion ? findingQuestion : null;
+                const answers = result.answers(...getHistoryData(argsHistory)) || [];
+                const findingQuestion = answers.find((answer, id) => arg === id + 1 || arg === answer.command);
+                result = findingQuestion || null;
             }
         });
     }
@@ -31,7 +37,7 @@ const getDialogData = (config, args) => {
 };
 
 const cli = async (args) => {
-    const dialogData = getDialogData(config, args);
+    const dialogData = getDialogDataFromArgs(config, args);
 
     if (dialogData) {
         const command = await getCommandFromDialog(dialogData);

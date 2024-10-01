@@ -13,21 +13,10 @@ const getSearchPathsData = () => {
 const getConfigData = () => {
     const searchPathsData = getSearchPathsData();
     const configPath = searchPathsData.find((path) => fs.existsSync(path));
-    !configPath && logger.configNotFoundError(searchPathsData);
+    !configPath && logger.logConfigNotFoundError(searchPathsData);
     return configPath ? require(resolve(configPath)) : {};
 };
 
-const getProcessedConfig = (data) => {
-    return data && data.answers ? {
-        ...data,
-        answers: data.answers.map((item, id) => getProcessedConfig({
-            ...item,
-            id: (id + 1).toString()
-        }))
-    } : data;
-};
-
-const configData = getConfigData();
-const config = getProcessedConfig(configData);
+const config = getConfigData();
 
 module.exports = config;
