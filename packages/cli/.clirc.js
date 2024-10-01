@@ -36,6 +36,10 @@ module.exports = ({
                     }
                 ])
             })
+        },
+        {
+            command: 'handler',
+            execute: (...args) => console.log(`Handler with args «[${args}]» successfully executed`)
         }
     ])
 });

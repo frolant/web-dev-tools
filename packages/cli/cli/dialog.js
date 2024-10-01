@@ -89,7 +89,7 @@ const getCommandFromDialog = async (data, args) => {
 
         if (data.answers) {
             const result = await getAnswerData(data, pathHistory, answerFromArgs);
-            result ? await processDialog(result) : logger.logWrongChooseError();
+            result ? await processDialog(result) : logger.logWrongChooseError(pathHistory);
         } else {
             getCommandHandler = data.execute;
 
@@ -108,7 +108,10 @@ const getCommandFromDialog = async (data, args) => {
 
     await processDialog(data);
 
-    return !args.length && getCommandHandler ? getCommandHandler(...getHistoryData(pathHistory)) : null;
+    const isDataSuccessProcessed = !args.length && getCommandHandler;
+    !isDataSuccessProcessed && logger.logWrongArgumentError();
+
+    return isDataSuccessProcessed ? getCommandHandler(...getHistoryData(pathHistory)) : null;
 };
 
 module.exports = getCommandFromDialog;

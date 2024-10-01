@@ -18,7 +18,7 @@ const runCommand = (command) => spawn(command, {
 const cli = async (args) => {
     if (config) {
         const command = await getCommandFromDialog(config, args);
-        command ? runCommand(command) : logger.logWrongArgumentError();
+        command && runCommand(command);
     }
 };
 
