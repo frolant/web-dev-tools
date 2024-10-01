@@ -3,7 +3,8 @@
 const readLine = require('readline');
 
 const logger = require('./logger');
-const { getHistoryData } = require('./utils');
+
+const getHistoryData = (data) => Array.from(data).reverse();
 
 const clearDialogScreen = () => {
     readLine.cursorTo(process.stdout, 0, 1);
@@ -24,15 +25,15 @@ const askQuestion = async (question) => new Promise((resolve) => {
     });
 });
 
-const getProcessedQuestion = (data, pathHistory) => {
-    const title = logger.getBoldText(data.question || `Choose variant:`);
+const getProcessedQuestion = (data, pathHistory, useBackVariant = true) => {
+    const title = logger.getBoldText(data.question || `Insert variant:`);
     const header = `${logger.getInclinedGrayText(`/${pathHistory.join('/')}`)}\n${title}`;
     const answers = data.answers ? data.answers.reduce((result, item) => {
         const hint = item.id === '1' ? logger.getGrayText(' (default)') : '';
         return `${result}${logger.getGrayText(item.id)} ${item.command}${hint}\n`;
     }, '') : '';
 
-    return `${header}\n${answers}${logger.getGrayText('0 back')}\n> `;
+    return `${header}\n${answers}${useBackVariant ? logger.getGrayText('0 back\n') : ''}> `;
 };
 
 const getProcessedDialogData = (data, pathHistory) => {
@@ -45,13 +46,17 @@ const getProcessedDialogData = (data, pathHistory) => {
     } : data;
 };
 
-const getAnswerFromDialog = async (data, pathHistory) => {
+const getAnswerData = async (data, pathHistory, answerFromArgs) => {
+    let answer = answerFromArgs;
     let result;
 
     const processedData = getProcessedDialogData(data, pathHistory);
-    const question = getProcessedQuestion(processedData, pathHistory);
 
-    const answer = await askQuestion(question);
+    if (!answer) {
+        const question = getProcessedQuestion(processedData, pathHistory);
+        answer = await askQuestion(question);
+    }
+
     const isMatchBack = answer === '0' || answer === 'back';
 
     if (isMatchBack) {
@@ -74,22 +79,23 @@ const getAnswerFromDialog = async (data, pathHistory) => {
     return result;
 };
 
-const getCommandFromDialog = async (data) => {
+const getCommandFromDialog = async (data, args) => {
     let pathHistory = [ 'cli' ];
     let getCommandHandler;
 
     const processDialog = async (data) => {
         data.command && pathHistory.push(data.command);
+        const answerFromArgs = args.shift();
 
         if (data.answers) {
-            const result = await getAnswerFromDialog(data, pathHistory);
+            const result = await getAnswerData(data, pathHistory, answerFromArgs);
             result ? await processDialog(result) : logger.logWrongChooseError();
         } else {
             getCommandHandler = data.execute;
 
             if (data.question) {
-                const question = getProcessedQuestion(data, pathHistory);
-                const answer = await askQuestion(question);
+                const question = getProcessedQuestion(data, pathHistory, false);
+                const answer = answerFromArgs || await askQuestion(question);
                 pathHistory.push(answer);
             }
 
@@ -102,7 +108,7 @@ const getCommandFromDialog = async (data) => {
 
     await processDialog(data);
 
-    return getCommandHandler ? getCommandHandler(...getHistoryData(pathHistory)) : null;
+    return !args.length && getCommandHandler ? getCommandHandler(...getHistoryData(pathHistory)) : null;
 };
 
 module.exports = getCommandFromDialog;

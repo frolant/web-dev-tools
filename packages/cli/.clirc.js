@@ -26,7 +26,7 @@ module.exports = ({
                         question: `Insert second answer`,
                         dialog: (...args) => ({
                             question: `Insert last answer (prev args: «[${args}]»)`,
-                            execute: (secondAnswer) => `echo Dialog with answers «${firstAnswer}» and «${secondAnswer}» successfully finished && exit 0`
+                            execute: (lastAnswer) => `echo Dialog with answers first-«${firstAnswer}» and last-«${lastAnswer}» successfully finished && exit 0`
                         })
                     },
                     {
