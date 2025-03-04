@@ -38,9 +38,9 @@ const getPercentage = () => {
 
 const executeHandler = (name, percentage, message, info) => {
     // const startTime = new Date().getTime();
-    progressPluginHandler(name, percentage, message, [
+    progressPluginHandler(percentage, message, [
         info
-    ]);
+    ], name, true);
     // console.log('execution time (ms):', new Date().getTime() - startTime);
 }
 

@@ -5,11 +5,11 @@ import { getProgressBar } from './utils/progress';
 import { state, progressData, processMessageData, displayingPercentageRestriction, maxPercentage } from './constants';
 
 export const progressPluginHandler = (
-    clearConsole: boolean,
-    label = 'processing',
     progress = 0,
     processMessage = '',
-    processInfo: string[] = []
+    processInfo: string[] = [],
+    label = 'processing',
+    clearConsole = false
 ): void => {
     const percentage = Math.floor(progress * maxPercentage);
     const logLinesCount = clearConsole ? undefined : Object.keys(progressData).length + 1;
