@@ -1,6 +1,6 @@
 {
     "name": "@web-dev-tools/cli",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "description": "Configured command line interface",
     "author": "Anton Frolov",
     "license": "ISC",
