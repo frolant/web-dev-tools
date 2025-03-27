@@ -3,7 +3,6 @@
 const { spawn } = require('child_process');
 
 const getCommandFromDialog = require('./dialog');
-const logger = require('./logger');
 const config = require('./config');
 
 const runCommand = (command) => spawn(command, {
@@ -16,8 +15,9 @@ const runCommand = (command) => spawn(command, {
 });
 
 const cli = async (args) => {
-    if (config) {
-        const command = await getCommandFromDialog(config, args);
+    const configData = config.default || config;
+    if (configData) {
+        const command = await getCommandFromDialog(configData, args);
         command && runCommand(command);
     }
 };
