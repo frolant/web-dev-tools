@@ -30,7 +30,8 @@ const getProcessedQuestion = (data, pathHistory, useBackVariant = true) => {
     const header = `${logger.getInclinedGrayText(`/${pathHistory.join('/')}`)}\n${title}`;
     const answers = data.answers ? data.answers.reduce((result, item) => {
         const hint = item.id === '1' ? logger.getGrayText(' (default)') : '';
-        return `${result}${logger.getGrayText(item.id)} ${item.command}${hint}\n`;
+        const description = item.description ? logger.getGrayText(` ${item.description}`) : '';
+        return `${result}${logger.getGrayText(item.id)} ${item.command}${description}${hint}\n`;
     }, '') : '';
 
     return `${header}\n${answers}${useBackVariant ? logger.getGrayText('0 back\n') : ''}> `;
