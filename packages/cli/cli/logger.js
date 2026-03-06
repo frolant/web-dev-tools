@@ -1,6 +1,7 @@
 "use strict";
 
 const log = console.log;
+
 const getStyledText = (style, text) => `${style}${text}\x1b[0m`;
 const getErrorText = (text) => getStyledText('\u001b[31m\u001b[1m', text);
 
