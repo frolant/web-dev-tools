@@ -27,7 +27,8 @@ const askQuestion = async (question) => new Promise((resolve) => {
 
 const getProcessedQuestion = (data, pathHistory, useBackVariant = true) => {
     const title = logger.getBoldText(data.question || `Insert variant:`);
-    const header = `${logger.getInclinedGrayText(`/${pathHistory.join('/')}`)}\n${title}`;
+    const processedPathHistory = logger.getInclinedGrayText(`/${pathHistory.join('/')}`);
+    const header = `${processedPathHistory}\n${title}`;
     const answers = data.answers ? data.answers.reduce((result, item) => {
         const hint = item.id === '1' ? logger.getGrayText(' (default)') : '';
         const description = item.description ? logger.getGrayText(` ${item.description}`) : '';
